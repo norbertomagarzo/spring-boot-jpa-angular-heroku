@@ -21,5 +21,5 @@ public class Thing {
     String name;
 
     @Column(precision=8, scale=2)
-    BigDecimal number;
+    String description;
 }

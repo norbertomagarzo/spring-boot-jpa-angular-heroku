@@ -2,14 +2,12 @@ package pgoggin.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pgoggin.models.Thing;
 import pgoggin.models.ThingDao;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +19,6 @@ public class ThingController {
 
     @Autowired
     private ThingDao dao;
-
-//    @RequestMapping(value = {"/", "/index"}, method= RequestMethod.GET)
-//    public String index() {
-//        return "index.html";
-//    }
 
     @RequestMapping(value = {"/thing/create"}, method = RequestMethod.POST)
     @ResponseBody
@@ -47,15 +40,29 @@ public class ThingController {
         dao.createMultiple(things);
     }
 
-    @RequestMapping(value = {"/thing/all"}, method= RequestMethod.GET)
+    @RequestMapping(value = {"/thing/all"}, method = RequestMethod.GET)
     public List<Thing> getAll(HttpServletRequest req) {
         return dao.getAll();
     }
 
-    @RequestMapping(value = {"/thing/update"}, method= RequestMethod.POST)
-    public String update()
-    {
-        return "index";
+    @RequestMapping(value = {"/thing/update"}, method = RequestMethod.PATCH)
+    @ResponseBody
+    public void update(@RequestBody Thing thing, HttpServletRequest req){
+        dao.update(thing);
+    }
+
+    @RequestMapping(value = {"/thing/delete/all"}, method = RequestMethod.DELETE)
+    @ResponseBody
+    public List<Thing> deleteAll(HttpServletRequest req){
+        dao.deleteAll();
+        return new ArrayList<Thing>();
+    }
+
+    @RequestMapping(value = {"/thing/{id}"}, method = RequestMethod.DELETE)
+    @ResponseBody
+    public List<Thing> delete(HttpServletRequest req, @PathVariable("id") String id){
+        dao.delete(Long.parseLong(id));
+        return dao.getAll();
     }
 
 }

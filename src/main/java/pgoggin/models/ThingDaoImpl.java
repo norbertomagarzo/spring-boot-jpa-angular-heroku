@@ -6,12 +6,17 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by patrickgoggin on 2/27/17.
  */
-//@Transactional
+@Transactional
 @Component
 public class ThingDaoImpl implements ThingDao{
 
@@ -55,6 +60,11 @@ public class ThingDaoImpl implements ThingDao{
 
     public void deleteMultiple(Iterable<Thing> things){
         repo.deleteInBatch(things);
+    }
+
+    public void deleteAll(){
+        repo.deleteAllInBatch();
+       // int deletedCount = entityManager.createQuery("DELETE FROM Country").executeUpdate();
     }
 
 }

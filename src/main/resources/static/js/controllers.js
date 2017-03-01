@@ -1,44 +1,104 @@
-var Controllers = angular.module('Controllers', []);
-Controllers.controller('ThingController', ['$scope', '$http', function ($scope, $http) {
+var Controllers = angular.module('Controllers', ['app.services']);
+Controllers.controller('ThingController', ['$scope', '$http', '$rootScope','$global', function ($scope, $http, $rootScope, $global) {
+    $scope.showForm = true;
 
-$scope.create = function(){
+    $scope.create = function(){
         var name = angular.element('#new-thing-name').val();
-        var number = angular.element('#new-thing-number').val();
-        alert("Name: " + name | + "Number: " + number);
-        var parameter = JSON.stringify({type: "Thing", name: name, number: number});
+        var description = angular.element('#new-thing-description').val();
+        if(!name){return}
+        var parameter = JSON.stringify({type: "Thing", name: name, description: description});
         $http.post("/thing/create", parameter)
-                            .then(function (response) {
-                                $scope.thing = null;
-                                if (response.data == null) {
-                                    $scope.thing = null;
-                                }
-                                $scope.thing = response.data;
-                                $scope.name = response.data.name;
-                                $scope.number = response.data.number;
-                            });
-        }
+            .then(function(response){
+            $scope.thing = null;
+            if (response.data == null) {
+                $scope.thing = null;
+            }
+            resetForm();
+            $global.getList();
+        });
+        testList();
+    }
 
-        $scope.list =
-                $http.get('/things')
-                                .then(function (response) {
-                                  //  $scope.list = null;
-                                    if (response.data == null) {
-                                        $scope.list = null;
-                                    }
-                                    alert(response.data);
-                                    $scope.list = response.data;
-                                });
+    // test to be sure thing has been created and list updated
+    function testList(){
+        function check(l){
+            var l = $rootScope.list;
+            return l;
+        }(function doit(){
+            setTimeout(function(){
+                console.log(
+                    "list length: " + $rootScope.list.length + "\n"
+                    + "last name added: " + $rootScope.list[$rootScope.list.length - 1].name)}, 3000);
+        }());
+    }s
 
-       $scope.updateList =  function(){
-       $http.get('/things')
-                               .then(function (response) {
-                                 //  $scope.list = null;
-                                   if (response.data == null) {
-                                       $scope.list = null;
-                                   }
-                                   alert(response.data);
-                                   $scope.list = response.data;
-                               });
-       }
+    function resetForm(){
+        $scope.thingName = null;
+        $scope.thingNumber = null;
+        angular.element('#new-thing-name').val('');
+        angular.element('#new-thing-description').val('');
+        angular.element('#formButton').one('focus', function(e){$(this).blur();});
+        angular.element('#formButton').blur();
+    }
 
-    }]);
+    $scope.viewDetails = function(item){
+        $global.setDetails(item);
+    }
+
+    $scope.updateThing = function(thingDetails){
+        var name = angular.element('#edit-thing-name').val();
+        var description = angular.element('#edit-thing-description').val();
+        var id = $global.getDetails().id;
+        if(!name){return}
+        if(!id){return}
+        var parameter = JSON.stringify({type: "Thing", id: id, name: name, description: description});
+        $http.patch("/thing/update", parameter)
+            .then(function(response){
+            $scope.thing = null;
+            if (response.data == null) {
+                $scope.thing = null;
+            }
+            $rootScope.list = $global.getList();
+        });
+    }
+}]);
+
+Controllers.controller('ListController', ['$scope', '$http', '$rootScope','$global', function ($scope, $http, $rootScope, $global) {
+    $rootScope.list = $global.getList();
+
+    $scope.updateList =  function(){
+        $scope.list = $global.getList();
+    }
+
+    $scope.deleteAll = function(){
+        $http.delete('/thing/delete/all')
+            .then(function (response) {
+            $rootScope.list = $global.getList();
+            $global.setList(response.data);
+            $global.clearDetails();
+        });
+    }
+
+}]);
+
+Controllers.controller('DetailsController', ['$scope', '$http', '$rootScope','$global', function ($scope, $http, $rootScope, $global) {
+    $scope.hideDetails = function(){
+        $global.clearDetails();
+    }
+
+    $scope.editThing = function(thingDetails){
+        $scope.thingDetails = $global.getDetails();
+        $scope.showEditForm = true;
+    }
+
+    $scope.deleteThing = function(thingDetails){
+        var id = thingDetails.id;
+        $http.delete('/thing/'+id)
+            .then(function (response) {
+            $global.setList(response.data);
+            $global.clearDetails();
+            $global.getList();
+        });
+    }
+
+}]);

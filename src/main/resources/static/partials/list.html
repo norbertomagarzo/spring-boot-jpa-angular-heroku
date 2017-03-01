@@ -1,9 +1,15 @@
-<h1>LIST</h1>
-<ul id="list">
+<h1>LIST OF THINGS</h1>
+<span ng-hide="list">List is currently empty</span>
+<br/>
+Click a thing to view details.
+<div ng-show="list">
+<ul id="thing-list">
     <li class="thing-in-list" ng-repeat="item in list" ng-cloak>
-        <!--<a id="{{item.name}}" class="details-link" ng-click="viewThingDetails(); itemClicked($index);" ng-class="{ 'selected-class-name': $index == selectedIndex }">-->
+        <a id="{{item.name}}" class="details-link" ng-click="viewDetails(item);" ng-class="{ 'selected-class-name': $index == selectedIndex }">
             {{item.name}}
-        <!--</a>-->
+        </a>
+        <br>
     </li>
 </ul>
-
+<button id="emptyButton" class="btn btn-primary" ng-click="deleteAll()">Empty List</button>
+</div>

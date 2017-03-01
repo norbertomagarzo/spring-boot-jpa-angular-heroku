@@ -15,4 +15,5 @@ public interface ThingDao {
     public void update(Thing thing);
     public void delete(long id);
     public void deleteMultiple(Iterable<Thing> things);
+    public void deleteAll();
 }
