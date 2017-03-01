@@ -30,7 +30,7 @@ Controllers.controller('ThingController', ['$scope', '$http', '$rootScope','$glo
                     "list length: " + $rootScope.list.length + "\n"
                     + "last name added: " + $rootScope.list[$rootScope.list.length - 1].name)}, 3000);
         }());
-    }s
+    }
 
     function resetForm(){
         $scope.thingName = null;
