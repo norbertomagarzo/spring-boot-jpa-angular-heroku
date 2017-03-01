@@ -43,6 +43,7 @@ Controllers.controller('ThingController', ['$scope', '$http', '$rootScope','$glo
 
     $scope.viewDetails = function(item){
         $global.setDetails(item);
+        $rootScope.details = $global.getDetails();
     }
 
     $scope.updateThing = function(thingDetails){
