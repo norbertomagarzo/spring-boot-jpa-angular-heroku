@@ -41,10 +41,7 @@ Controllers.controller('ThingController', ['$scope', '$http', '$rootScope','$glo
         angular.element('#formButton').blur();
     }
 
-    $scope.viewDetails = function(item){
-        $global.setDetails(item);
-        $rootScope.details = $global.getDetails();
-    }
+
 
     $scope.updateThing = function(thingDetails){
         var name = angular.element('#edit-thing-name').val();
@@ -59,9 +56,10 @@ Controllers.controller('ThingController', ['$scope', '$http', '$rootScope','$glo
             if (response.data == null) {
                 $scope.thing = null;
             }
-            $rootScope.list = $global.getList();
+            $global.setDetails(response.data);
         });
     }
+
 }]);
 
 Controllers.controller('ListController', ['$scope', '$http', '$rootScope','$global', function ($scope, $http, $rootScope, $global) {
@@ -70,6 +68,13 @@ Controllers.controller('ListController', ['$scope', '$http', '$rootScope','$glob
     $scope.updateList =  function(){
         $scope.list = $global.getList();
     }
+
+    $scope.viewDetails = function(item){
+            var thingDetails = item;
+            $global.clearDetails();
+            $global.setDetails(thingDetails);
+            $rootScope.thingDetails = item;
+        }
 
     $scope.deleteAll = function(){
         $http.delete('/thing/delete/all')
@@ -88,8 +93,7 @@ Controllers.controller('DetailsController', ['$scope', '$http', '$rootScope','$g
     }
 
     $scope.editThing = function(thingDetails){
-        $scope.thingDetails = $global.getDetails();
-        $scope.showEditForm = true;
+        $rootScope.thingToEdit = thingDetails;
     }
 
     $scope.deleteThing = function(thingDetails){

@@ -1,9 +1,9 @@
 <section class="techinfo" ng-controller="DetailsController">
-    <h1>DETAILS</h1>
+    <h1>THING DETAILS</h1>
     <div ng-model="things">
-        <h3>Name: {{thingDetails.name}}</h3>
-        <h3>ID: {{thingDetails.id}}</h3>
-        <h3>Description: {{thingDetails.description}}</h3>
+        <h4 class="details-field">Name: <span ng-bind="thingDetails.name"></span></h4>
+        <h4 class="details-field">ID: <span ng-bind="thingDetails.id"></span></h4>
+        <h4 class="details-field">Description: <span ng-bind="thingDetails.description"></span></h4><br>
         <a id="edit-link" ng-click="editThing(thingDetails)" data-toggle="modal" href="#edit-modal">Edit thing</a><br>
         <a id="delete-link" ng-click="deleteThing(thingDetails)">Delete thing</a>
     </div>

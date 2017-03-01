@@ -47,8 +47,9 @@ public class ThingController {
 
     @RequestMapping(value = {"/thing/update"}, method = RequestMethod.PATCH)
     @ResponseBody
-    public void update(@RequestBody Thing thing, HttpServletRequest req){
+    public Thing update(@RequestBody Thing thing, HttpServletRequest req){
         dao.update(thing);
+        return dao.getById(thing.getId());
     }
 
     @RequestMapping(value = {"/thing/delete/all"}, method = RequestMethod.DELETE)
