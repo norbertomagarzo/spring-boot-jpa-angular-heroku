@@ -33,3 +33,4 @@ In project root directory:
     $ heroku addons:create heroku-postgresql
     $ git push heroku master
     $ heroku ps:scale web=1
+    $ heroku open
