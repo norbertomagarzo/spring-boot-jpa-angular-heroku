@@ -40,10 +40,7 @@ position: relative;
 text-align: center;
 }
 
-#details-container{
-text-align: center;
-float:right;
-}
+
 
 .hide-section{
 float: right;
@@ -70,8 +67,7 @@ margin-bottom:40px;
 }
 
 #thing-table{
-width:600px;
-min-width:400px;
+width:100%;
 float:left;
 }
 
@@ -85,3 +81,20 @@ float:right;
 margin:5px;
 }
 
+#details-container{
+text-align: center;
+float:right;
+max-width:700px;
+}
+
+#details-panel{
+width:100%;
+}
+
+#table-container{
+float:left;
+}
+
+#table-head-name{
+text-align:right;
+}

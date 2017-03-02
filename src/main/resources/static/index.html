@@ -33,8 +33,10 @@
 <div ng-controller="ThingController">
     <div id="nav" ng-include src="'partials/nav.html'"></div>
     <div class="container" id="container">
-        <div id="thing-table" ng-controller="ListController" ng-include src="'partials/table.html'"></div>
-        <div id="details-container" class="section-container" class="col-sm-3" ng-include src="'partials/details.html'" ng-show="thingDetails" ng-controller="DetailsController"></div>
+        <div class="row">
+        <div id="table-container" class="col-sm-7" ng-controller="ListController" ng-include src="'partials/table.html'"></div>
+        <div id="details-container" class="col-sm-5" ng-include src="'partials/details.html'" ng-show="thingDetails" ng-controller="DetailsController"></div>
+        </div>
         <div ng-controller="ThingController" ng-include src="'partials/edit-modal.html'"></div>
         <div ng-controller="ThingController" ng-include src="'partials/thing-modal.html'"></div>
     </div>

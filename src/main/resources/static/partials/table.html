@@ -2,7 +2,7 @@
     <thead id="table-head">
     <tr>
         <th>#</th>
-        <th>Name</th>
+        <th id="table-head-name">Name</th>
         <th>Description</th>
     </tr>
     </thead>
@@ -16,8 +16,9 @@
                         <li><a data-toggle="modal" href="#edit-modal" ng-click="editThing(item)">Edit</a></li>
                         <li><a ng-click="deleteThing(thingDetails)">Delete</a></li>
                     </ul>
-            </div>
             {{item.id}}
+            </div>
+
         </td>
         <td>
             <a id="{{item.name}}" class="details-link" ng-click="viewDetails(item);" ng-class="{ 'selected-class-name': $index == selectedIndex }">
