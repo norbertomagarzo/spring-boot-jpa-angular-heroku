@@ -70,11 +70,11 @@ Controllers.controller('ListController', ['$scope', '$http', '$rootScope','$glob
     }
 
     $scope.viewDetails = function(item){
-            var thingDetails = item;
-            $global.clearDetails();
-            $global.setDetails(thingDetails);
-            $rootScope.thingDetails = item;
-        }
+        var thingDetails = item;
+        $global.clearDetails();
+        $global.setDetails(thingDetails);
+        $rootScope.thingDetails = item;
+    }
 
     $scope.deleteAll = function(){
         $http.delete('/thing/delete/all')
@@ -85,6 +85,66 @@ Controllers.controller('ListController', ['$scope', '$http', '$rootScope','$glob
         });
     }
 
+    $scope.set_color = function (item) {
+        var list = $scope.list;
+        for(i=0; i < list.length; i++){
+            var thing = list[i];
+            if(item.id == thing.id){
+                if(4 !== 0 && i%3 !== 0 && i%2 !== 0 && i%1 !== 0){
+                    return 'info';
+                }
+                if(i == 0){
+                    return 'info';
+                }
+                if(i%5 == 0){
+                    return 'info';
+                }
+                if(i%4 !== 0 && i%3 !== 0 && i%2 !== 0 && i%1 == 0){
+                    return 'success';
+                }
+                if(i%4 !== 0 && i%2 == 0){
+                    return 'danger';
+                }
+                if(i%3 == 0){
+                    return 'warning';
+                }
+                if(i%4 == 0 ){
+                    return 'active';
+                }
+            }
+        }
+
+    }
+    $scope.button_color = function (item) {
+            var list = $scope.list;
+            for(i=0; i < list.length; i++){
+                var thing = list[i];
+                if(item.id == thing.id){
+                    if(4 !== 0 && i%3 !== 0 && i%2 !== 0 && i%1 !== 0){
+                        return 'btn-info';
+                    }
+                    if(i == 0){
+                        return 'btn-info';
+                    }
+                    if(i%5 == 0){
+                        return 'btn-info';
+                    }
+                    if(i%4 !== 0 && i%3 !== 0 && i%2 !== 0 && i%1 == 0){
+                        return 'btn-success';
+                    }
+                    if(i%4 !== 0 && i%2 == 0){
+                        return 'btn-danger';
+                    }
+                    if(i%3 == 0){
+                        return 'btn-warning';
+                    }
+                    if(i%4 == 0 ){
+                        return 'btn-active';
+                    }
+                }
+            }
+
+        }
 }]);
 
 Controllers.controller('DetailsController', ['$scope', '$http', '$rootScope','$global', function ($scope, $http, $rootScope, $global) {

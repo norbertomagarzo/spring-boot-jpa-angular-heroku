@@ -6,19 +6,11 @@ a{
 cursor:pointer;
 }
 
-
 li{
 list-style-type: none;
 }
 
-
 #thingForm{
-max-width: 400px;
-}
-
-.section-container{
-margin: 20px;
-float: left;
 max-width: 400px;
 }
 
@@ -50,6 +42,7 @@ text-align: center;
 
 #details-container{
 text-align: center;
+float:right;
 }
 
 .hide-section{
@@ -67,3 +60,28 @@ float:left;
 .details-field{
 text-align:left;
 }
+
+#container{
+padding-top:60px;
+}
+
+#nav{
+margin-bottom:40px;
+}
+
+#thing-table{
+width:600px;
+min-width:400px;
+float:left;
+}
+
+#table-head{
+border-top:1px solid #2C3E50;
+border-bottom:1px solid #2C3E50;
+}
+
+.details-link{
+float:right;
+margin:5px;
+}
+
